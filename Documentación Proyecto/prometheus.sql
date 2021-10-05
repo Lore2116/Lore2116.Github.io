@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-10-2021 a las 15:20:33
+-- Tiempo de generación: 05-10-2021 a las 16:18:09
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 8.0.9
 
@@ -44,12 +44,20 @@ CREATE TABLE `equipo_computo` (
 --
 
 CREATE TABLE `login` (
-  `Id_Login` int(11) NOT NULL,
-  `Id_Rol` int(11) NOT NULL,
-  `User` int(11) NOT NULL,
-  `Pass` int(11) NOT NULL,
-  `Estado` tinyint(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id` int(11) NOT NULL,
+  `correo` varchar(123) NOT NULL,
+  `usuario` varchar(100) NOT NULL,
+  `clave` varchar(200) NOT NULL
+) ENGINE=MEMORY DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `login`
+--
+
+INSERT INTO `login` (`id`, `correo`, `usuario`, `clave`) VALUES
+(7, 'pedro@.gamil.com', 'pedro', '4dff4ea340f0a823f15d3f4f01ab62eae0e5da579ccb851f8db9dfe84c58b2b37b89903a740e1ee172da793a6e79d560e5f7f9bd058a12a280433ed6fa46510a'),
+(6, 'cristian@gmail.com', 'cristian', '3c9909afec25354d551dae21590bb26e38d53f2173b8d3dc3eee4c047e7ab1c1eb8b85103e3be7ba613b31bb5c9c36214dc9f14a42fd7a2fdb84856bca5c44c2'),
+(8, 'victoro8933@gmail.com', 'vsierra08', '647715c4668c69f531548b4c5630bd0eff793017c34a42ab92b2dfcea8ebd433eb9b0c0316fb172e8568b63332b83f896b977f7c709ef89cc568d43fbf9d82e5');
 
 -- --------------------------------------------------------
 
@@ -64,25 +72,6 @@ CREATE TABLE `registro_equipo` (
   `fecha_entrada` datetime NOT NULL,
   `fecha_salida` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='registro de entrada de equpos';
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `rol`
---
-
-CREATE TABLE `rol` (
-  `Id_Rol` int(11) NOT NULL,
-  `Nombre_Rol` varchar(50) NOT NULL,
-  `Descripcion` varchar(245) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `rol`
---
-
-INSERT INTO `rol` (`Id_Rol`, `Nombre_Rol`, `Descripcion`) VALUES
-(1, 'administrador', 'Crea Modifica y consulta ');
 
 -- --------------------------------------------------------
 
@@ -116,8 +105,7 @@ ALTER TABLE `equipo_computo`
 -- Indices de la tabla `login`
 --
 ALTER TABLE `login`
-  ADD PRIMARY KEY (`Id_Login`),
-  ADD KEY `Id_Rol` (`Id_Rol`);
+  ADD UNIQUE KEY `id` (`id`);
 
 --
 -- Indices de la tabla `registro_equipo`
@@ -126,12 +114,6 @@ ALTER TABLE `registro_equipo`
   ADD PRIMARY KEY (`Id_Registro`),
   ADD KEY `Id_usuario` (`Id_usuario`),
   ADD KEY `Id_equipo` (`Id_equipo`);
-
---
--- Indices de la tabla `rol`
---
-ALTER TABLE `rol`
-  ADD PRIMARY KEY (`Id_Rol`);
 
 --
 -- Indices de la tabla `usuario`
@@ -153,19 +135,13 @@ ALTER TABLE `equipo_computo`
 -- AUTO_INCREMENT de la tabla `login`
 --
 ALTER TABLE `login`
-  MODIFY `Id_Login` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `registro_equipo`
 --
 ALTER TABLE `registro_equipo`
   MODIFY `Id_Registro` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `rol`
---
-ALTER TABLE `rol`
-  MODIFY `Id_Rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
@@ -176,12 +152,6 @@ ALTER TABLE `usuario`
 --
 -- Restricciones para tablas volcadas
 --
-
---
--- Filtros para la tabla `login`
---
-ALTER TABLE `login`
-  ADD CONSTRAINT `login_ibfk_1` FOREIGN KEY (`Id_Rol`) REFERENCES `rol` (`Id_Rol`);
 
 --
 -- Filtros para la tabla `registro_equipo`
